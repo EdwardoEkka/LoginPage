@@ -87,13 +87,45 @@ function Login() {
     return value.length >= 5;
   };
 
+  const isValidEmail = (value) => {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(value);
+  };
+
+  const isValidUsername = (value) => {
+    return value.length >= 5;
+  };
+
+  const isValidPassword = (value) => {
+    if (value.length < 8) {
+      return false;
+    }
+  
+    if (!/[A-Z]/.test(value)) {
+      return false;
+    }
+  
+    if (!/[a-z]/.test(value)) {
+      return false;
+    }
+  
+    if (!/\d/.test(value)) {
+      return false;
+    }
+  
+    if (!/[!@#$%^&*]/.test(value)) {
+      return false;
+    }
+  
+    return true;
+  };
   const handleLogin = () => {
     if (!isValidUsername(username)) {
       setUnamecheck('Invalid username. Username must be at least 5 characters.');
     } else if (!isValidEmail(email)) {
       setEmailcheck('Invalid email. Please enter a valid email address');
-    } else if (password === '') {
-      setPcheck('Password cannot be left empty.');
+    } else if (!isValidPassword(password)) {
+      setPcheck('Atleast one uppercase,lowercase,digit and a special character.');
     } else {
       alert(`Logged in with Username: ${username}, Email: ${email}, and Password: ${password}`);
     }
